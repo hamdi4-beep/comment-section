@@ -3,7 +3,14 @@ export function reducer(state, action) {
 
     switch (action.type) {
         case 'CREATE_REPLY':
+            if (comment.parentId) {
+                const parentComment = state.byId[comment.parentId]
+                console.log(parentComment)
+                return state
+            }
+
             console.log(comment)
+
             return state
 
         case 'INCREMENT_SCORE':
