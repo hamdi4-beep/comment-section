@@ -11,14 +11,14 @@ const Comment = ({
   comment
 }) => {
   const {state} = useContext(StateContext)
-  const replies = state.allId.filter(id => state.byId[id].parentId === comment.id)
+  const replyIds = state.allId.filter(id => state.byId[id].parentId === comment.id)
 
   return (
     <div className="comment">
       <Card item={comment} />
 
       <div className="replies-list">
-        {replies.map(id => (
+        {replyIds.map(id => (
           <Card
             item={state.byId[id]}
             key={id}
@@ -31,12 +31,12 @@ const Comment = ({
 
 function App() {
   const [state, dispatch] = useReducer(reducer, data.comments)
-  const comments = state.allId.filter(id => !state.byId[id].parentId)
+  const commentIds = state.allId.filter(id => !state.byId[id].parentId)
 
   return (
     <div className="App">
       <StateContext.Provider value={{state, dispatch}}>
-        {comments.map(id => (
+        {commentIds.map(id => (
           <Comment
             comment={state.byId[id]}
             key={id}
