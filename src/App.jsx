@@ -1,10 +1,19 @@
 import data from './data.json'
 
+// This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
 const Card = ({
-  item,
-  replyDispatch,
-  editDispatch
+  item
 }) => {
+  const handleReplyDispatch = () => {
+    // accesses the object directly so you could find the parent comment through the 'parentId' property
+    console.log(item)
+  }
+
+  const handleEditDispatch = () => {
+    // defines the edit method here so you can modify the object directly
+    console.log('This triggers the edit functionality')
+  }
+
   return (
     <div className="card">
       <div className="score-component">
@@ -36,7 +45,8 @@ const Card = ({
           <span className="comment-date">{item.createdAt}</span>
 
           <div className="actions">
-            <button onClick={() => replyDispatch(item)}>
+            {/* Passes in the id so we can find what object we are modifying */}
+            <button onClick={handleReplyDispatch}>
               <div className="icon-img">
                 <img src="/images/icon-reply.svg" alt="" />
               </div>
@@ -44,7 +54,7 @@ const Card = ({
               Reply
             </button>
 
-            <button onClick={() => editDispatch(item)}>
+            <button onClick={handleEditDispatch}>
               <div className="icon-img">
                 <img src="/images/icon-edit.svg" alt="" />
               </div>
@@ -70,31 +80,14 @@ const Card = ({
 const Comment = ({
   comment
 }) => {
-  const handleReplyDispatch = item => {
-    if (comment.replies.find(reply => reply.id === item.id)) {
-      console.log('Adds the new reply to the parent comment')
-      return
-    }
-
-    console.log('Adds a new reply')
-  }
-  
-  const handleEditDispatch = () => console.log('This triggers the edit functionality')
-
   return (
     <div className="comment">
-      <Card
-        item={comment}
-        replyDispatch={handleReplyDispatch}
-        editDispatch={handleEditDispatch}
-      />
+      <Card item={comment} />
 
       <div className="replies-list">
         {comment.replies.map(reply => (
           <Card
             item={reply}
-            replyDispatch={handleReplyDispatch}
-            editDispatch={handleEditDispatch}
             key={reply.id}
           />
         ))}
