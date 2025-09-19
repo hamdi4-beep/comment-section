@@ -6,22 +6,33 @@ export function reducer(state, action) {
             if (comment.parentId) {
                 const parentComment = state.byId[comment.parentId]
                 console.log(parentComment)
-                return state
             }
 
             console.log(comment)
 
             return state
 
-        case 'INCREMENT_SCORE':
-            const clone = structuredClone(state)
+        case 'INCREMENT_SCORE': {
+            const clonedState = structuredClone(state)
             
-            clone.byId[action.id] = {
+            clonedState.byId[action.id] = {
                 ...comment,
-                score: comment.score + 1
+                score: comment.score == action.currentScore ? comment.score + 1 : action.currentScore
             }
 
-            return clone
+            return clonedState
+        }
+
+        case 'DECREMENT_SCORE': {
+            const clonedState = structuredClone(state)
+
+            clonedState.byId[action.id] = {
+                ...comment,
+                score: comment.score === action.currentScore ? comment.score - 1 : action.currentScore
+            }
+
+            return clonedState
+        }
 
         default:
             return state
