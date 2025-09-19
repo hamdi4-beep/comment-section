@@ -6,16 +6,14 @@ export function reducer(state, action) {
             console.log(comment)
 
         case 'INCREMENT_SCORE':
-            return {
-                ...state,
-                byId: {
-                    ...state.byId,
-                    [action.id]: {
-                        ...comment,
-                        score: comment.score + 1
-                    }
-                }
+            const clone = structuredClone(state)
+            
+            clone.byId[action.id] = {
+                ...comment,
+                score: comment.score + 1
             }
+
+            return clone
 
         default:
             return state
