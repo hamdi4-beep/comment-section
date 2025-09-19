@@ -4,6 +4,7 @@ export function reducer(state, action) {
     switch (action.type) {
         case 'CREATE_REPLY':
             console.log(comment)
+            return state
 
         case 'INCREMENT_SCORE':
             const clone = structuredClone(state)
