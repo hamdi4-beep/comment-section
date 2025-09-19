@@ -10,7 +10,7 @@ const Card = ({
   const handleReplyDispatch = () => {
     // accesses the object directly so you could find the parent comment through the 'parentId' property
     dispatch({
-      type: 'addReply',
+      type: 'CREATE_REPLY',
       id: item.id
     })
   }
@@ -20,10 +20,17 @@ const Card = ({
     console.log('This triggers the edit functionality')
   }
 
+  const handleIncrementScoreDispatch = () => {
+    dispatch({
+      type: 'INCREMENT_SCORE',
+      id: item.id
+    })
+  }
+
   return (
     <div className="card">
       <div className="score-component">
-        <button>
+        <button onClick={handleIncrementScoreDispatch}>
           <div className="icon-img">
             <img src="/images/icon-plus.svg" alt="" />
           </div>

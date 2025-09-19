@@ -1,10 +1,23 @@
 export function reducer(state, action) {
-    switch (action.type) {
-      case 'addReply':
-        const comment = state.byId[action.id]
-        console.log(comment)
+    const comment = state.byId[action.id]
 
-      default:
-        return state
+    switch (action.type) {
+        case 'CREATE_REPLY':
+            console.log(comment)
+
+        case 'INCREMENT_SCORE':
+            return {
+                ...state,
+                byId: {
+                    ...state.byId,
+                    [action.id]: {
+                        ...comment,
+                        score: comment.score + 1
+                    }
+                }
+            }
+
+        default:
+            return state
     }
   }
