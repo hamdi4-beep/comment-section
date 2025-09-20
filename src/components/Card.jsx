@@ -13,7 +13,8 @@ const Card = ({
     // accesses the object directly so you could find the parent comment through the 'parentId' property
     dispatch({
       type: 'CREATE_REPLY',
-      id: item.id
+      id: item.id,
+      username: item.user.username
     })
 
   const handleEditDispatch = () => {
