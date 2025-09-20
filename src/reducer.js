@@ -9,19 +9,18 @@ export function reducer(state, action) {
             const clonedState = structuredClone(state)
             const comment = clonedState.byId[action.id]
 
-            if (!comment.parentId) clonedState.byId[action.id].replies.push(newId)
-
             clonedState.byId[newId] = {
                 content: 'A new reply!',
                 score: 0,
                 replies: null,
                 id: newId,
-                parentId: action.id,
+                parentId: comment.parentId || action.id,
                 replyingTo: action.username,
                 createdAt: 'just now',
                 user: data.currentUser
             }
 
+            clonedState.byId[comment.parentId || action.id].replies.push(newId)
             clonedState.allId.push(newId)
 
             return clonedState
