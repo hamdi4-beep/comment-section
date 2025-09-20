@@ -19,6 +19,7 @@ export function reducer(state, action) {
                 user: data.currentUser
             }
 
+            // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.
             clonedState.byId[comment.parentId || action.payload.id].replies.push(newId)
             clonedState.allId.push(newId)
 
