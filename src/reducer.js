@@ -1,12 +1,12 @@
 import data from './data.json'
 
 export function reducer(state, action) {
-    const comment = state.byId[action.payload.id]
+    const clonedState = structuredClone(state)
+    const comment = clonedState.byId[action.payload.id]
 
     switch (action.type) {
         case 'CREATE_REPLY':
             const newId = Math.max.apply(null, state.allId) + 1
-            const clonedState = structuredClone(state)
 
             clonedState.byId[newId] = {
                 content: 'A new reply!',
@@ -25,8 +25,6 @@ export function reducer(state, action) {
             return clonedState
 
         case 'INCREMENT_SCORE': {
-            const clonedState = structuredClone(state)
-            
             clonedState.byId[action.payload.id] = {
                 ...comment,
                 score: comment.score == action.payload.currentScore ? comment.score + 1 : action.payload.currentScore
@@ -36,8 +34,6 @@ export function reducer(state, action) {
         }
 
         case 'DECREMENT_SCORE': {
-            const clonedState = structuredClone(state)
-
             clonedState.byId[action.payload.id] = {
                 ...comment,
                 score: comment.score === action.payload.currentScore ? comment.score - 1 : action.payload.currentScore
