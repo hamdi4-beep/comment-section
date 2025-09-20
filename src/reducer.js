@@ -1,7 +1,7 @@
 import data from './data.json'
 
 export function reducer(state, action) {
-    const comment = state.byId[action.id]
+    const comment = state.byId[action.payload.id]
 
     switch (action.type) {
         case 'CREATE_REPLY':
@@ -13,13 +13,13 @@ export function reducer(state, action) {
                 score: 0,
                 replies: null,
                 id: newId,
-                parentId: comment.parentId || action.id,
-                replyingTo: action.username,
+                parentId: comment.parentId || action.payload.id,
+                replyingTo: action.payload.username,
                 createdAt: 'just now',
                 user: data.currentUser
             }
 
-            clonedState.byId[comment.parentId || action.id].replies.push(newId)
+            clonedState.byId[comment.parentId || action.payload.id].replies.push(newId)
             clonedState.allId.push(newId)
 
             return clonedState
@@ -27,9 +27,9 @@ export function reducer(state, action) {
         case 'INCREMENT_SCORE': {
             const clonedState = structuredClone(state)
             
-            clonedState.byId[action.id] = {
+            clonedState.byId[action.payload.id] = {
                 ...comment,
-                score: comment.score == action.currentScore ? comment.score + 1 : action.currentScore
+                score: comment.score == action.payload.currentScore ? comment.score + 1 : action.payload.currentScore
             }
 
             return clonedState
@@ -38,9 +38,9 @@ export function reducer(state, action) {
         case 'DECREMENT_SCORE': {
             const clonedState = structuredClone(state)
 
-            clonedState.byId[action.id] = {
+            clonedState.byId[action.payload.id] = {
                 ...comment,
-                score: comment.score === action.currentScore ? comment.score - 1 : action.currentScore
+                score: comment.score === action.payload.currentScore ? comment.score - 1 : action.payload.currentScore
             }
 
             return clonedState

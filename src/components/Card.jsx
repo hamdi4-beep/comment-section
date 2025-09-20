@@ -13,8 +13,10 @@ const Card = ({
     // accesses the object directly so you could find the parent comment through the 'parentId' property
     dispatch({
       type: 'CREATE_REPLY',
-      id: item.id,
-      username: item.user.username
+      payload: {
+        id: item.id,
+        username: item.user.username
+      }
     })
 
   const handleEditDispatch = () => {
@@ -25,15 +27,19 @@ const Card = ({
   const handleIncrementScoreDispatch = () =>
     dispatch({
       type: 'INCREMENT_SCORE',
-      id: item.id,
-      currentScore: currentScoreRef.current
+      payload: {
+        id: item.id,
+        currentScore: currentScoreRef.current
+      }
     })
 
   const handleDecrementScoreDispatch = () =>
     dispatch({
       type: 'DECREMENT_SCORE',
-      id: item.id,
-      currentScore: currentScoreRef.current
+      payload: {
+        id: item.id,
+        currentScore: currentScoreRef.current
+      }
     })
 
   return (
