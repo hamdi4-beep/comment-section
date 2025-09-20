@@ -7,7 +7,6 @@ export function reducer(state, action) {
         case 'CREATE_REPLY':
             const newId = Math.max.apply(null, state.allId) + 1
             const clonedState = structuredClone(state)
-            const comment = clonedState.byId[action.id]
 
             clonedState.byId[newId] = {
                 content: 'A new reply!',
